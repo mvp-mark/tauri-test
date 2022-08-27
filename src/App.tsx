@@ -1,41 +1,17 @@
-import { useState } from "react";
-import { invoke } from "@tauri-apps/api/tauri";
+import * as React from 'react';
+import { useDemoData } from '@mui/x-data-grid-generator';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
-
-function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
-
-  async function greet() {
-    setGreetMsg(await invoke("greet", { name }));
-  }
+export default function ExportDefaultToolbar() {
+  const { data, loading } = useDemoData({
+    dataSet: 'Commodity',
+    rowLength: 4,
+    maxColumns: 6,
+  });
 
   return (
-    <div className="container">
-      <h1>Welcome to Tauri!</h1>
-
-
-
-      <p>
-        Click on the Tauri, Vite, and React logos to learn more about each
-        framework.
-      </p>
-
-      <div className="row">
-        <div>
-          <input
-            id="greet-input"
-            onChange={(e) => setName(e.currentTarget.value)}
-            placeholder="Enter a name..."
-          />
-          <button type="button" onClick={() => greet()}>
-            Greet
-          </button>
-        </div>
-      </div>
-      <p>{greetMsg}</p>
+    <div style={{ height: 300, width: '100%' }}>
+      <DataGrid {...data} loading={loading} components={{ Toolbar: GridToolbar }} />
     </div>
   );
 }
-
-export default App;
